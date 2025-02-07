@@ -1,0 +1,1 @@
+Temp/ScriptUpdater/60078861\672561170_HandsInteractionSampleProjectValidation.cs => Assets/Samples/XR Interaction Toolkit/2.5.0/Hands Interaction Demo/Editor/Scripts/HandsInteractionSampleProjectValidation.cs
