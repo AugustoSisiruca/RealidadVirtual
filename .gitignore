@@ -10,6 +10,15 @@
 [Ll]ogs/
 [Uu]ser[Ss]ettings/
 
+
+# Archivos generados por XR Interaction Toolkit/Plugins
+*.asmdef
+*.asmdef.meta
+
+# Configuraciones de dispositivos específicos (opcional)
+/ProjectSettings/XRSettings.asset*
+
+
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
