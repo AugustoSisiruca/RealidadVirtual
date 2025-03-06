@@ -39,10 +39,17 @@ public class OnVelocity : MonoBehaviour
     private void CheckVelocity()
     {
         float speed = rigidBody.velocity.magnitude;
-        hasBegun = HasVelocityBegun(speed);
 
-        if (HasVelcoityEnded(speed))
-            Reset();
+        if (speed > beginThreshold && !hasBegun)
+        {
+            OnBegin.Invoke(this);
+            hasBegun = true;
+        }
+        else if (speed < endThreshold && hasBegun)
+        {
+            OnEnd.Invoke(this);
+            hasBegun = false;
+        }
     }
 
     private bool HasVelocityBegun(float speed)
