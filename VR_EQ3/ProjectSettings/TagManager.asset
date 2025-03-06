@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Llama
+  - Drumstick
+  - CinemachineTarget
+  - Box
+  - bongo
   layers:
   - Default
   - TransparentFX
