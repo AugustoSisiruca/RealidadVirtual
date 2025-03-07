@@ -9,6 +9,7 @@ TagManager:
   - CinemachineTarget
   - Box
   - bongo
+  - VRController
   layers:
   - Default
   - TransparentFX
