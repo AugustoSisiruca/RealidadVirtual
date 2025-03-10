@@ -2,38 +2,30 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using System.Collections;
 
-[RequireComponent(typeof(Rigidbody), typeof(HingeJoint), typeof(XRGrabInteractable))]
+[RequireComponent(typeof(Rigidbody), typeof(HingeJoint), typeof(XRSimpleInteractable))]
 public class VRPianoKey : MonoBehaviour
 {
-    [Header("Audio Settings")]
-    public AudioClip keySound;
-    [Range(0, 1)] public float maxVolume = 1f;
-    [Range(0, 1)] public float pitchRandomness = 0.05f;
-    
+
+
     [Header("Key Physics")]
     [Range(0, 45)] public float pressAngleThreshold = 10f;
     public float returnSpringForce = 100f;
     public float damper = 5f;
 
-    private AudioSource audioSource;
     private Rigidbody rb;
     private HingeJoint hinge;
-    private XRGrabInteractable grabInteractable;
-    
-    private float initialAngle;
+    private XRSimpleInteractable simpleInteractable;
+
     private bool isPressed;
-    private float originalPitch;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         hinge = GetComponent<HingeJoint>();
-        grabInteractable = GetComponent<XRGrabInteractable>();
-        audioSource = GetComponent<AudioSource>();
+        simpleInteractable = GetComponent<XRSimpleInteractable>();
 
         ConfigureHingeJoint();
-        SetupAudioSource();
-        ConfigureGrabInteractable();
+        ConfigureSimpleInteractable();
     }
 
     void ConfigureHingeJoint()
@@ -47,19 +39,13 @@ public class VRPianoKey : MonoBehaviour
         hinge.spring = spring;
     }
 
-    void SetupAudioSource()
-    {
-        audioSource.clip = keySound;
-        audioSource.playOnAwake = false;
-        audioSource.spatialBlend = 1f; // 3D spatial audio
-        originalPitch = audioSource.pitch;
-    }
 
-    void ConfigureGrabInteractable()
+
+    void ConfigureSimpleInteractable()
     {
-        grabInteractable.throwOnDetach = false;
-        grabInteractable.movementType = XRBaseInteractable.MovementType.Instantaneous;
-        grabInteractable.retainTransformParent = true;
+        // Configura el XRSimpleInteractable para detectar hover y select
+        simpleInteractable.selectEntered.AddListener(OnSelectEntered);
+        simpleInteractable.selectExited.AddListener(OnSelectExited);
     }
 
     void Update()
@@ -70,7 +56,7 @@ public class VRPianoKey : MonoBehaviour
     void CheckKeyPressState()
     {
         float currentAngle = hinge.angle;
-        
+
         if (!isPressed && currentAngle >= pressAngleThreshold)
         {
             OnKeyPressed();
@@ -84,48 +70,26 @@ public class VRPianoKey : MonoBehaviour
     void OnKeyPressed()
     {
         isPressed = true;
-        PlayKeySound();
     }
 
     void OnKeyReleased()
     {
         isPressed = false;
-        StartCoroutine(FadeOutSound());
     }
 
-    void PlayKeySound()
+
+
+
+    // Eventos del XRSimpleInteractable
+    private void OnSelectEntered(SelectEnterEventArgs args)
     {
-        if (!audioSource.isPlaying)
-        {
-            // Aleatoriedad de tono para mayor realismo
-            audioSource.pitch = originalPitch + Random.Range(-pitchRandomness, pitchRandomness);
-            audioSource.volume = maxVolume;
-            audioSource.Play();
-        }
+        // Simula la presión de la tecla cuando se selecciona (poke)
+        rb.AddTorque(Vector3.right * 50f, ForceMode.Impulse);
     }
 
-    IEnumerator FadeOutSound()
+    private void OnSelectExited(SelectExitEventArgs args)
     {
-        float fadeTime = 0.1f;
-        float startVolume = audioSource.volume;
-
-        while (audioSource.volume > 0)
-        {
-            audioSource.volume -= startVolume * Time.deltaTime / fadeTime;
-            yield return null;
-        }
-        
-        audioSource.Stop();
-        audioSource.volume = maxVolume;
-    }
-
-    // Para permitir la interacción con controladores VR
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("VRController"))
-        {
-            rb.AddForceAtPosition(collision.impulse * 0.1f, collision.contacts[0].point, 
-                ForceMode.Impulse);
-        }
+        // Simula la liberación de la tecla
+        rb.AddTorque(Vector3.right * -50f, ForceMode.Impulse);
     }
 }
