@@ -1,5 +1,4 @@
 ﻿using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -39,17 +38,10 @@ public class OnVelocity : MonoBehaviour
     private void CheckVelocity()
     {
         float speed = rigidBody.velocity.magnitude;
+        hasBegun = HasVelocityBegun(speed);
 
-        if (speed > beginThreshold && !hasBegun)
-        {
-            OnBegin.Invoke(this);
-            hasBegun = true;
-        }
-        else if (speed < endThreshold && hasBegun)
-        {
-            OnEnd.Invoke(this);
-            hasBegun = false;
-        }
+        if (HasVelcoityEnded(speed))
+            Reset();
     }
 
     private bool HasVelocityBegun(float speed)
