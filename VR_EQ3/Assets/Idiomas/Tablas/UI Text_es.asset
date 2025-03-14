@@ -19,11 +19,13 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 663895781376
-    m_Localized: Bienvenido al cuarto RV
+    m_Localized: "Para comenzar primero veremos un tutorial de como usar los instrumentos
+      musicales. Prende el televisor y realiza el tutorial para avanzar a la siguiente
+      zona. Presiona el bot\xF3n OK para reiniciar la escena."
     m_Metadata:
       m_Items: []
   - m_Id: 6128969035776
-    m_Localized: aaaaaaaaaaaaa
+    m_Localized: "\xA1Bienvenido a la Orquesta Espacial!"
     m_Metadata:
       m_Items: []
   references:

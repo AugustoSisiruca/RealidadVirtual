@@ -19,11 +19,13 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 663895781376
-    m_Localized: Welcome to VR Room
+    m_Localized: To begin, we'll first watch a tutorial on how to use the musical
+      instruments. Turn on the TV and complete the tutorial to advance to the next
+      area. Press the OK button to restart the scene.
     m_Metadata:
       m_Items: []
   - m_Id: 6128969035776
-    m_Localized: bbbbbbbbbbbbb
+    m_Localized: Welcome to the Space Orchestra!
     m_Metadata:
       m_Items: []
   references:

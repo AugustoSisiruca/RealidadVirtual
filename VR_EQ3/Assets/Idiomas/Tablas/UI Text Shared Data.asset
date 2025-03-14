@@ -16,11 +16,11 @@ MonoBehaviour:
   m_TableCollectionNameGuidString: 2bad52b22aeda0546967d91d3ef2ee23
   m_Entries:
   - m_Id: 663895781376
-    m_Key: Prueba
+    m_Key: Bienvenida
     m_Metadata:
       m_Items: []
   - m_Id: 6128969035776
-    m_Key: 2
+    m_Key: Titulo
     m_Metadata:
       m_Items: []
   m_Metadata:
